@@ -3,7 +3,8 @@ from langchain_openai import ChatOpenAI
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import AnyMessage, SystemMessage, HumanMessage, ToolMessage, AIMessage
-
+from rag import retriever_tool
+from prompts import react_prompt
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
 import json
@@ -24,7 +25,7 @@ tavily_tool = TavilySearchResults(
 )
 
 # Create React agent
-react_agent = create_react_agent(model=model_openai, tools=[tavily_tool])
+react_agent = create_react_agent(model=model_openai, tools=[tavily_tool, retriever_tool], prompt=react_prompt)
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -33,11 +34,11 @@ app = FastAPI()
 class QuestionRequest(BaseModel):
     question: str
 
-@app.get("/welcome2")
+@app.get("/welcome")
 async def welcome():
     return {"message": "Welcome to the Bank Documents QA System!"}
 
-@app.post("/ask2")
+@app.post("/ask")
 async def ask(request: QuestionRequest):
 
     messages=[]
