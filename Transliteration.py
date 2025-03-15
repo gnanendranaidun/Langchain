@@ -7,9 +7,9 @@ SARVAM_API_KEY = os.getenv("SARVAM_API_KEY")
 def transliterate(input_text, source_language_code, target_language_code):
     payload = {
         "spoken_form": False,
-        "input": "jhsbd cjsjhckj",
-        "source_language_code": "hi-IN",
-        "target_language_code": "en-IN",
+        "input": input_text,
+        "source_language_code": source_language_code,
+        "target_language_code": target_language_code,
         "spoken_form_numerals_language": "english"
     }
     headers = {

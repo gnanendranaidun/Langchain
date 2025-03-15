@@ -70,16 +70,21 @@ chat_history = []
 async def welcome():
     return {"message": "Welcome to the Bank Documents QA System!"}
 
+from pydantic import BaseModel
+
+class QuestionRequest(BaseModel):
+    question: str
+
 @app.post("/ask")
-async def ask(question: str):
+async def ask(request: QuestionRequest):
+    question = request.question
     global chat_history
     
     if not question:
         return {"error": "Please provide a question."}
     
-    # Get response from the chain
     result = chain.invoke({"question": question, "chat_history": chat_history})
-
+    
     if isinstance(result, dict) and "answer" in result and "source_documents" in result:
         answer = result["answer"]
         source_docs = result["source_documents"]
@@ -88,20 +93,15 @@ async def ask(question: str):
         answer = "Sorry, an error occurred."
         source_docs = []
 
-    # Update chat history
     chat_history.append((question, answer))
 
-    # Return the answer and source documents if available
     response = {"answer": answer}
     if source_docs:
-        response["sources"] = []
-        for i, doc in enumerate(source_docs, 1):
-            source = doc.metadata.get('source', 'Unknown source')
-            content = doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content
-            response["sources"].append({
-                "source": source,
-                "content": content
-            })
+        response["sources"] = [
+            {"source": doc.metadata.get('source', 'Unknown source'), 
+             "content": doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content}
+            for doc in source_docs
+        ]
 
     return response["answer"]
 
@@ -111,4 +111,4 @@ if not os.getenv("OPENAI_API_KEY"):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
