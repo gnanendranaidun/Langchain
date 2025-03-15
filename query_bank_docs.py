@@ -36,7 +36,7 @@ def load_retrieval_chain(persist_directory: str = "embeddings_db"):
         
         # Initialize the language model
         llm = ChatOpenAI(
-            model_name="gpt-4o-mi",
+            model_name="gpt-4o-mini",
             temperature=0
         )
         
