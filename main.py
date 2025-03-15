@@ -6,6 +6,7 @@ from langchain_community.vectorstores import Chroma
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 import logging
+from translate_text import detect_and_translate
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -78,6 +79,7 @@ class QuestionRequest(BaseModel):
 @app.post("/ask")
 async def ask(request: QuestionRequest):
     question = request.question
+    question,detect_leng = detect_and_translate(question,"en")
     global chat_history
     
     if not question:
@@ -102,12 +104,12 @@ async def ask(request: QuestionRequest):
              "content": doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content}
             for doc in source_docs
         ]
-
-    return response["answer"]
+    result,detect_leng = detect_and_translate(response["answer"],detect_leng)
+    return result
 
 # Check for OpenAI API key
 if not os.getenv("OPENAI_API_KEY"):
-    raise ValueError("Please set OPENAI_API_KEY in your environment variables or .env file")
+    raise ValueError("Please set OPENAI_API_KEY in you r environment variables or .env file")
 
 if __name__ == "__main__":
     import uvicorn

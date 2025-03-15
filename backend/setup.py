@@ -43,7 +43,7 @@ import os
 #all the models
 #model_gemini=ChatGoogleGenerativeAI(model='gemini-1.5-flash')
 model_openai=ChatOpenAI(model="gpt-4o-mini", cache=False)
-model_llama=ChatGroq(model="llama-3.3-70b-versatile")   
+#model_llama=ChatGroq(model="llama-3.3-70b-versatile")   
 
 #model_mistral=ChatGroq(model="mixtral-8x7b-32768")
 #model_llama_vision=ChatGroq(model="llama-3.2-11b-vision-preview")
