@@ -1,5 +1,5 @@
 # AI-Powered Loan Advising System
-
+The fronted of this project located at the repo: https://github.com/Aditya-Ranjan1234/Multilingual-Loan-Advisor-App-Sarvam
 ![Loan Advising System](x.png)
 
 ## Overview
