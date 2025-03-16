@@ -8,6 +8,11 @@ from prompts import react_prompt
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
 import json
+from translate_text import detect_and_translate
+from fastapi.middleware.cors import CORSMiddleware
+
+# Allow all origins (for development)
+
 
 # Load environment variables
 
@@ -25,11 +30,16 @@ tavily_tool = TavilySearchResults(
 )
 
 # Create React agent
-react_agent = create_react_agent(model=model_openai, tools=[tavily_tool, retriever_tool], prompt=react_prompt)
-
+react_agent = create_react_agent(model=model_openai, tools=[tavily_tool, retriever_tool])
 # Initialize FastAPI app
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Change this to specific origins in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Create a Pydantic model for the request body
 class QuestionRequest(BaseModel):
     question: str
@@ -40,23 +50,31 @@ async def welcome():
 
 @app.post("/ask")
 async def ask(request: QuestionRequest):
-
+    question,detect_leng = detect_and_translate(request.question,"en")
     messages=[]
+    messages.append(SystemMessage(content=react_prompt))
+    if not os.path.exists("conv_history.json"):
+        with open("conv_history.json", "w", encoding="utf-8") as file:
+            #json.dump( [],file)
+            pass
     with open("conv_history.json", "r", encoding="utf-8") as file:
         data = json.load(file) 
     for entry in data:
         messages.append(HumanMessage(content=entry["Human"]))
         messages.append(AIMessage(content=entry["AI"]))
-    res = react_agent.invoke(messages)
+    messages.append(HumanMessage(content=request.question))
+    res = react_agent.invoke({"messages":messages})
+    print(res)
      # Store the conversation in memory
-    conversation_entry = {"Human": request.question, "AI": res["message"][-1].content}
+    conversation_entry = {"Human": request.question, "AI": res["messages"][-1].content}
+    data.append(conversation_entry)
 
     # Write updated history to JSON file
     with open("conv_history.json", "w", encoding="utf-8") as f:
-        json.dump(conversation_entry, f, indent=4)
-
-    return res["messages"][-1].content
+        json.dump(data, f, indent=4)
+    result,detect_leng = detect_and_translate(res["messages"][-1].content,detect_leng)
+    return result
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
