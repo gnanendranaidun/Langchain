@@ -43,6 +43,7 @@ The system consists of several key components:
 4. **AI Service Interface**:
    - `backend_interface.py`: Provides API endpoints for TTS, STT, transliteration, and text analytics.
    - Connects to Sarvam AI's services for advanced AI capabilities.
+<img src="4D2A75AD-2B90-484A-BBE7-9EDB156EA198.png"><br>
 
 ## Setup and Installation
 
