@@ -70,5 +70,17 @@
     {
         "Human": "i want a loan amount of 5 lakh rupees\nwith an estimated value of home at 10 lakhs\nand down payment of 1 lakh\nand repaymnet of 5 year\nand credit scroe>100\nand monthly income 80k rupees",
         "AI": "Thank you for providing the details! Based on your information for a home loan, here's a quick overview:\n\n### Loan Details:\n- **Loan Amount**: \u20b95,00,000\n- **Estimated Property Value**: \u20b910,00,000\n- **Down Payment**: \u20b91,00,000\n- **Repayment Tenure**: 5 years\n- **Credit Score**: > 100 (Please confirm that your credit score is accurate, as the typical scale is 300 to 850)\n- **Monthly Income**: \u20b980,000\n\n### Loan Eligibility Considerations:\n1. **Loan-to-Value Ratio (LTV)**: \n   - The LTV ratio is calculated as the loan amount divided by the property value. For your case:\n   - LTV = (Loan Amount / Property Value) * 100 = (5,00,000 / 10,00,000) * 100 = 50%\n   - Most lenders prefer an LTV of up to 80% for home loans, so 50% is favorable.\n\n2. **Debt-to-Income Ratio (DTI)**:\n   - With your monthly income of \u20b980,000 and assuming you have no existing debts, your DTI ratio will be essential for approval. Payments would be assessed to ensure they stay within a manageable percentage of your income.\n\n3. **Interest Rates**: \n   - Based on typical market conditions, interest rates for home loans range from 7% to 9% for a tenure of 5 years. Rates can vary based on lender policies and personal creditworthiness.\n   \n4. **Estimated EMI**:\n   - Assuming an interest rate of 8% for a tenure of 5 years, the EMI for a loan amount of \u20b95,00,000 would be approximately \u20b910,800 per month, which is well within your earning capacity.\n\n### Next Steps:\n1. **Lender Research**: Compare offers from various banks to see who provides the best interest rates and terms. Some popular lenders for home loans in India include State Bank of India, HDFC Bank, ICICI Bank, and Axis Bank.\n   \n2. **Documentation**: Be prepared with necessary documentation, including proof of income, identity proof, property documents, and bank statements.\n\n3. **Application Process**: Once you have selected a lender, you can begin the application process. Be ready for a possible loan evaluation, which may involve a credit check and property valuation.\n\nIf you would like specific recommendations for lenders or further assistance with anything else, feel free to ask!"
+    },
+    {
+        "Human": "hello",
+        "AI": "Hello! How can I assist you today? If you have any questions or need help regarding loans or anything else, feel free to let me know!"
+    },
+    {
+        "Human": "hello",
+        "AI": "Hello again! How can I help you today? If you have any questions or need assistance with loans or any other topic, feel free to ask!"
+    },
+    {
+        "Human": "hello my name is aditya",
+        "AI": "Hello, Aditya! It's great to meet you. How can I assist you today? If you have any questions about loans or anything else, just let me know!"
     }
 ]
